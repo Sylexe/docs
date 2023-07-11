@@ -1,0 +1,36 @@
+---
+title: 'Base de données'
+description: 'Le détail de la base de données de Sylexe'
+icon: 'database'
+---
+
+## Structure de la base de données
+
+La base de données de Sylexe est composée de 1 table :
+
+| Fonction de la table       | Nom de la table   |
+| ------------- | ----------------- |
+| Historique          | `sylexeReports`        |
+
+### Structure de la table `sylexeReports`
+
+| Nom de la colonne | Type de la colonne | Description de la colonne |
+| ------------- | ------------- | ------------- |
+| `id` | `int(11)` | Identifiant unique de la ligne |
+| `Timestamp` | `datetime` | Date de l'envoi du rapport |
+| `Name` | `varchar(255)` | Nom du Dockerfile |
+| `Path` | `varchar(255)` | Chemin vers le rapport |
+
+### Fonction d'accès à la table `sylexeReports`
+
+| Fonction | Description |
+| ------------- | ------------- |
+| `GetReportsAsync()` | Retourne la liste des rapports |
+| `AddReportsAsync($rapport)` | Ajoute un rapport en concatenant une liste |
+| `DeleteReportsAsync($rapport)` | Supprime un rapport |
+| `UpdateReportsAsync()` | Met à jour un rapport |
+
+Le code utilisé pour interfacer la base de données est disponible dans la rubrique [Code source](code/code-source).
+
+
+

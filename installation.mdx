@@ -1,0 +1,84 @@
+---
+title: 'Installation'
+description: 'Apprenez comment installer Sylexe sur votre serveur ou ordinateur'
+icon: "download"
+---
+
+### Déployer Sylexe depuis les sources
+
+<AccordionGroup>
+  <Accordion icon="rectangle-terminal" title="Pré-requis">
+    Pour permettre l'utilisation de Sylexe, vous devez avoir installé sur votre serveur ou ordinateur :
+    <ul>
+      <li>ASP Net Core</li>
+      <li>Docker</li>
+    </ul>
+    Pour cela, vous pouvez installer ASP Net Core depuis le site officiel de [Microsoft](https://dotnet.microsoft.com/download">https://dotnet.microsoft.com/download) ou alors depuis votre gestionnaire de paquets.
+    <Accordion icon="linux" title="Linux">
+      <Accordion icon="rectangle-terminal" title="Debian/Ubuntu">
+        <CodeBlock>
+          sudo apt install dotnet-sdk-7.0
+        </CodeBlock>
+      </Accordion>
+      <Accordion icon="rectangle-terminal" title="Arch Linux">
+        <CodeBlock>
+          sudo pacman -S dotnet-sdk
+        </CodeBlock>
+      </Accordion>
+    </Accordion>
+    <Accordion icon="windows" title="Windows">
+      <Accordion icon="rectangle-terminal" title="Chocolatey">
+        <CodeBlock>
+          choco install dotnet-sdk
+        </CodeBlock>
+      </Accordion>
+    </Accordion>
+    <Accordion icon="apple" title="MacOS">
+      <Accordion icon="rectangle-terminal" title="Homebrew">
+        <CodeBlock>
+          brew install dotnet-sdk
+        </CodeBlock>
+      </Accordion>
+    </Accordion>
+  </Accordion>
+  <Accordion icon="github" title="Clonner le dépot et build">
+    Vous pouvez ensuite clonner depuis le dépot [officiel](https://github.com/Sylexe/SylexeRadzen).
+    <CodeBlock>
+      git clone https://github.com/Sylexe/SylexeRadzen
+    </CodeBlock>
+    Une fois le dépot cloné, vous pouvez build le projet avec la commande suivante :
+    <CodeBlock>
+      dotnet build
+    </CodeBlock>
+  </Accordion>
+  <Accordion icon="rocket" title="Lancer Sylexe">
+    Une fois le projet build, vous pouvez lancer Sylexe avec la commande suivante :
+    <CodeBlock>
+      dotnet run
+    </CodeBlock>
+    Vous pouvez ensuite accéder à Sylexe depuis votre navigateur [ici](http://localhost:5000).
+  </Accordion>
+</AccordionGroup>
+
+### Déployer Sylexe depuis les installateurs
+
+<AccordionGroup>
+
+<Accordion icon="windows" title="Depuis Windows">
+  Vous pouvez télécharger l'installateur depuis le site officiel de [Sylexe](https://sylexe.com/download).
+  Une fois l'installateur téléchargé, vous pouvez lancer l'installation.
+</Accordion>
+<Accordion icon="apple" title="Depuis MacOS">
+  Vous pouvez télécharger l'installateur depuis le site officiel de [Sylexe](https://sylexe.com/download).
+  Une fois l'installateur téléchargé, vous pouvez lancer l'installation.
+  Des instructions spécifique à MacOS sont disponibles dans le fichier .DMG.
+  Pour rappel :
+  <ul>
+    <li>Double-cliquez sur le fichier .DMG</li>
+    <li>Installer Docker</li>
+    <li>Executer le script</li>
+    <li>Executer l'installateur de Sylexe</li>
+  </ul>
+</Accordion>
+
+</AccordionGroup>

@@ -1,0 +1,115 @@
+---
+title: 'Code source'
+description: 'Code source de Sylexe'
+icon: 'code'
+---
+
+# Code source
+
+Le code source de Sylexe est disponible sur [GitHub](https://github.com/Sylexe/SylexeRadzen/).
+
+## Code de la Base de données
+
+Le code de la base de données est disponible dans le dossier [`SylexeRadzen/SQLManagement/Services`](https://github.com/Sylexe/SylexeRadzen/tree/master/SylexeRadzen/SQLManagement/Services) du Github.
+
+### GetReportsAsync
+
+```csharp
+public async Task<List<SylexeReports>> GetReportsAsync()
+{
+    return await dbContext.sylexeReports.ToListAsync();
+}
+```
+
+### AddReportsAsync
+
+```csharp
+public async Task<SylexeReports> AddReportsAsync(SylexeReports report)
+{
+    try
+    {
+        dbContext.sylexeReports.Add(report);
+        await dbContext.SaveChangesAsync();
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+        
+    return report;
+}
+```
+
+### UpdateReportsAsync
+
+```csharp
+public async Task<SylexeReports> UpdateReportsAsync(SylexeReports report)
+{
+    try
+    {
+        var ReportsExist = dbContext.sylexeReports.FirstOrDefault(l => l.Id == report.Id);
+        if (ReportsExist != null)
+        {
+            dbContext.Update(report);
+            await dbContext.SaveChangesAsync();
+        }
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+        
+    return report;
+}
+
+### DeleteReportsAsync
+
+```csharp
+public async Task DeleteCategoriesAsync(SylexeReports categories)
+{
+    try
+    {
+        dbContext.sylexeReports.Remove(categories);
+        await dbContext.SaveChangesAsync();
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+}
+```
+
+## Code de l'analyseur avec Trivy
+
+Le code de l'analyseur avec Trivy est disponible dans le dossier [`SylexeRadzen/Pages/Analyze.razor`](https://github.com/Sylexe/SylexeRadzen/blob/master/SylexeRadzen/Pages/Analyze.razor) du Github.
+
+### ExecTrivyScan
+
+```csharp
+
+void ExecTrivyScan(string DockerScan)
+{
+    Process serverSideProcess = new Process();
+    serverSideProcess.StartInfo.FileName = Environment.GetEnvironmentVariable("docker");
+    serverSideProcess.StartInfo.FileName = @"C:\Program Files\Docker\Docker\resources\bin\docker.exe";
+    var path = Path.Combine(WebEnvironment.ContentRootPath, WebEnvironment.EnvironmentName);
+    DateTime currentDateTime = DateTime.Now;
+    string formattedDateTime = currentDateTime.ToString("dd-MMMM-yyyy-HH:mm:ss");
+        
+    string input = (DockerScan + "-" + formattedDateTime);
+    string temp = Regex.Replace(input, @"\/", "-");
+    string pathOfJson = Regex.Replace(temp, @":", "_");
+        
+    serverSideProcess.StartInfo.Arguments = String.Format("run -v {0}:/result aquasec/trivy:0.34.0 -d image -f json -o /result/{1}.json {2}", path, pathOfJson, DockerScan);
+    serverSideProcess.EnableRaisingEvents = true;
+    serverSideProcess.StartInfo.UseShellExecute = true;
+    serverSideProcess.Start();
+        
+    _sylexeService.AddReportsAsync(new SylexeReports
+    {
+        Name = DockerScan,
+        Timestamp = formattedDateTime,
+        Path = pathOfJson+".json"
+    });
+}
+```
